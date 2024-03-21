@@ -1,8 +1,8 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "./_components/Header";
 import { Toaster } from "@/components/ui/sonner";
 import MyContextProvider from "./_context/UpdateCartItems";
+import Header from "./_components/Header/Header";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],

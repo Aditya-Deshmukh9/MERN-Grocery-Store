@@ -23,6 +23,7 @@ function CreateAccountPage() {
       const response = await GlobalApi.registeruser(username, email, password);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("jwt", JSON.stringify(response.data.jwt));
+
       router.push("/");
       toast("account register successful");
       setisLoading(false);

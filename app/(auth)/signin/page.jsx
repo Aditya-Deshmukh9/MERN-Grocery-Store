@@ -1,5 +1,6 @@
 "use client";
 import GlobalApi from "@/app/Utils/GlobalApi";
+import { useCart } from "@/app/_context/UpdateCartItems";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
@@ -12,17 +13,23 @@ function SigninPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const { setupdatecart } = useCart();
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
     setisLoading(true);
+
     try {
       const response = await GlobalApi.loginuser(email, password);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      localStorage.setItem("jwt", JSON.stringify(response.data.jwt));
+      const token = {
+        user: response.data.user,
+        jwt: response.data.jwt,
+        isLogin: true,
+      };
+      localStorage.setItem("token", JSON.stringify(token));
       router.push("/");
+      setupdatecart(true);
       setisLoading(false);
     } catch (error) {
       toast(error.message);

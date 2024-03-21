@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import ImgCoursel from "./ImgCoursel";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import GlobalApi from "../Utils/GlobalApi";
+import { toast } from "sonner";
+import { useCart } from "../_context/UpdateCartItems";
 
 function ProductDetailsPage({ product }) {
   const productTotalPrice = product.attributes.selling_price
@@ -10,6 +14,41 @@ function ProductDetailsPage({ product }) {
     : product.attributes.mrp;
 
   const [quantity, setQuantity] = useState(1);
+  const { updatecart, setupdatecart } = useCart();
+  const route = useRouter();
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const addToCart = () => {
+    if (token === null) {
+      route.push("/signin");
+    }
+
+    if (token) {
+      const jwt = token.jwt;
+      const user = token.user;
+      const data = {
+        data: {
+          quantity: quantity,
+          amount: (quantity * productTotalPrice).toFixed(2),
+          products: product.id,
+          users_permissions_users: user.id,
+          userId: user.id,
+        },
+      };
+
+      GlobalApi.addProductToCartApi(data, jwt).then(
+        (res) => {
+          console.log(res);
+          setupdatecart(!updatecart);
+          toast("Added to Cart");
+        },
+        (e) => {
+          toast("Error while adding into cart");
+          console.log(e);
+        }
+      );
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:p-2 content-center py-4">
@@ -49,7 +88,7 @@ function ProductDetailsPage({ product }) {
             = ₹{productTotalPrice * quantity}
           </h2>
         </div>
-        <Button>
+        <Button onClick={() => addToCart()}>
           {/* {isLoading === true ? (
             <Loader className="animate-spin" />
           ) : (

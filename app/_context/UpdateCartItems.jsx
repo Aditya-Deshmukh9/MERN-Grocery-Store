@@ -1,24 +1,17 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const cartContext = createContext(null);
 
 const MyContextProvider = ({ children }) => {
-  const [updateCart, setUpdateCart] = useState(false);
-  const [userData, setUserData] = useState({ user: null, jwt: null });
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const jwt = JSON.parse(localStorage.getItem("jwt"));
-    setUserData({ user, jwt });
-    if (user && jwt) {
-      setUpdateCart(false);
-    }
-  }, [updateCart]);
+  const [updatecart, setupdatecart] = useState(null);
 
   return (
     <cartContext.Provider
-      value={{ updateCart, setUserData, setUpdateCart, userData }}
+      value={{
+        updatecart,
+        setupdatecart,
+      }}
     >
       {children}
     </cartContext.Provider>
