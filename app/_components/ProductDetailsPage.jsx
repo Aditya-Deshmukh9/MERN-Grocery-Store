@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import ImgCoursel from "./ImgCoursel";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
+import { Loader, Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import GlobalApi from "../Utils/GlobalApi";
 import { toast } from "sonner";
@@ -15,12 +15,15 @@ function ProductDetailsPage({ product }) {
 
   const [quantity, setQuantity] = useState(1);
   const { updatecart, setupdatecart } = useCart();
+  const [isLoading, setLoading] = useState(false);
   const route = useRouter();
   const token = JSON.parse(localStorage.getItem("token"));
 
   const addToCart = () => {
+    setLoading(true);
     if (token === null) {
       route.push("/signin");
+      setLoading(false);
     }
 
     if (token) {
@@ -38,13 +41,15 @@ function ProductDetailsPage({ product }) {
 
       GlobalApi.addProductToCartApi(data, jwt).then(
         (res) => {
-          console.log(res);
+          console.log(res.data.data);
           setupdatecart(!updatecart);
           toast("Added to Cart");
+          setLoading(false);
         },
         (e) => {
           toast("Error while adding into cart");
           console.log(e);
+          setLoading(false);
         }
       );
     }
@@ -88,13 +93,12 @@ function ProductDetailsPage({ product }) {
             = ₹{productTotalPrice * quantity}
           </h2>
         </div>
-        <Button onClick={() => addToCart()}>
-          {/* {isLoading === true ? (
+        <Button className="w-full" onClick={() => addToCart()}>
+          {isLoading === true ? (
             <Loader className="animate-spin" />
           ) : (
             "Add To Cart"
-          )} */}
-          Add To Cart
+          )}
         </Button>
         <h2 className="font-semibold text-sm">
           Category: {product.attributes.category.data.attributes.name}

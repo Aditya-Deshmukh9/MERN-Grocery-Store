@@ -50,14 +50,38 @@ const addProductToCartApi = (data, jwt) =>
 
 const getCartItem = (userId, jwt) =>
   axiosClient
-    .get("/user-carts?filters[userId][$eq]=" + userId + "&populate=*", {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    })
+    .get(
+      "/user-carts?filters[userId][$eq]=" +
+        userId +
+        "&[populate][products][populate][images][populate][0]=url",
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    )
     .then((res) => {
-      return res.data.data;
+      const data = res.data.data;
+      const cartItemsList = data.map((item) => ({
+        title: item?.attributes?.products?.data?.attributes?.title,
+        quantity: item?.attributes?.quantity,
+        amount: item?.attributes?.amount,
+        imgurl:
+          item?.attributes?.products?.data?.attributes?.images?.data[0]
+            ?.attributes?.url,
+        actualPrice: item?.attributes?.products?.data?.attributes?.mrp,
+        id: item?.id,
+      }));
+
+      return cartItemsList;
     });
+
+const deleteCartItems = (itemId, jwt) =>
+  axiosClient.delete("/user-carts/" + itemId, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
 
 export default {
   getCetegory,
@@ -69,4 +93,5 @@ export default {
   loginuser,
   addProductToCartApi,
   getCartItem,
+  deleteCartItems,
 };

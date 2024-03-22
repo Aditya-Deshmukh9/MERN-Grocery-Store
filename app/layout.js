@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <MyContextProvider>
           <Header />
           {children}
-          <Toaster />
+          <Toaster className="text-xl" />
         </MyContextProvider>
       </body>
     </html>

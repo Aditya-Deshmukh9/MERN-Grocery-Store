@@ -16,11 +16,14 @@ import GlobalApi from "@/app/Utils/GlobalApi";
 import { Button } from "@/components/ui/button";
 import DropDownMenu from "./DropDownMenu";
 import { useCart } from "@/app/_context/UpdateCartItems";
+import CartItemList from "./CartItemList";
 
 function Header() {
   const [login, setLogin] = useState(true);
   const [totalItemInCart, setTotalItemInCart] = useState(0);
   const { updatecart, setupdatecart } = useCart();
+  const [cartItemList, setcartItemList] = useState([]);
+  const [tokenpass, settokenpass] = useState();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -30,6 +33,7 @@ function Header() {
       console.log("isLogin", isLogin);
     }
     getCartItems(token);
+    settokenpass(token);
   }, [updatecart]);
 
   const getCartItems = async (token) => {
@@ -41,8 +45,9 @@ function Header() {
       const jwt = token.jwt;
       const userid = token.user.id;
       try {
-        const cartItemList = await GlobalApi.getCartItem(userid, jwt);
-        setTotalItemInCart(cartItemList.length);
+        const cartItemList_ = await GlobalApi.getCartItem(userid, jwt);
+        setTotalItemInCart(cartItemList_.length);
+        setcartItemList(cartItemList_);
       } catch (error) {
         console.log(error);
         setTotalItemInCart(0);
@@ -50,8 +55,25 @@ function Header() {
     }
   };
 
+  const onDelItem = async (id) => {
+    if (tokenpass) {
+      const jwt = tokenpass.jwt;
+      const itemId = id;
+      try {
+        GlobalApi.deleteCartItems(itemId, jwt).then((res) => {
+          getCartItems(tokenpass);
+          toast("Product Remove Successful");
+        });
+      } catch (error) {
+        toast("Error deleting item");
+        console.log("Error deleting item");
+      }
+    }
+  };
+
   const getSignOut = () => {
     localStorage.clear();
+    getCartItems(tokenpass);
     setLogin(false);
     setupdatecart(null);
     toast("Successfully signed out");
@@ -86,10 +108,14 @@ function Header() {
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
-              <SheetTitle>Are you absolutely sure?</SheetTitle>
+              <SheetTitle
+                className="bg-primary
+                text-white font-bold text-lg p-2"
+              >
+                My Cart ({totalItemInCart})
+              </SheetTitle>
               <SheetDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                <CartItemList data={cartItemList} onDelItem={onDelItem} />
               </SheetDescription>
             </SheetHeader>
           </SheetContent>
