@@ -2,6 +2,7 @@
 import { Search, ShoppingBasket } from "lucide-react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -12,18 +13,21 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
-import GlobalApi from "@/app/Utils/GlobalApi";
 import { Button } from "@/components/ui/button";
 import DropDownMenu from "./DropDownMenu";
 import { useCart } from "@/app/_context/UpdateCartItems";
 import CartItemList from "./CartItemList";
+import { useRouter } from "next/navigation";
+import GlobalApi from "@/app/Utils/GlobalApi";
 
 function Header() {
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState();
   const [totalItemInCart, setTotalItemInCart] = useState(0);
   const { updatecart, setupdatecart } = useCart();
   const [cartItemList, setcartItemList] = useState([]);
   const [tokenpass, settokenpass] = useState();
+  const [subTotal, setsubTotal] = useState(0);
+  const route = useRouter();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -35,6 +39,14 @@ function Header() {
     getCartItems(token);
     settokenpass(token);
   }, [updatecart]);
+
+  useEffect(() => {
+    let total = 0;
+    cartItemList.forEach((element) => {
+      total = total + element.amount;
+    });
+    setsubTotal(total);
+  }, [cartItemList]);
 
   const getCartItems = async (token) => {
     if (token === null) {
@@ -118,6 +130,20 @@ function Header() {
                 <CartItemList data={cartItemList} onDelItem={onDelItem} />
               </SheetDescription>
             </SheetHeader>
+            <SheetClose>
+              <div className="w-[90%] absolute bottom-6 flex flex-col">
+                <h2 className="text-lg font-semibold text-gray-700 flex justify-between">
+                  Subtotal: <span>₹{subTotal}</span>
+                </h2>
+                <Button
+                  onClick={() =>
+                    route.push(tokenpass ? "/checkout" : "/signin")
+                  }
+                >
+                  Checkout
+                </Button>
+              </div>
+            </SheetClose>
           </SheetContent>
         </Sheet>
 

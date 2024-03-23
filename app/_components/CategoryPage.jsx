@@ -9,7 +9,7 @@ function CategoryPage({ categorylist }) {
       <div className="mt-5 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7">
         {categorylist.map((category) => (
           <Link
-            href={"products-category/" + category?.attributes?.name}
+            href={"products-category/" + category?.attributes?.slug}
             key={category?.id}
             className="bg-green-50 flex flex-col items-center mx-2 gap-3 p-2 py-4 group hover:bg-green-600 cursor-pointer rounded-md"
           >

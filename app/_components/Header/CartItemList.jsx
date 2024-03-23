@@ -1,22 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function CartItemList({ data, onDelItem }) {
-  const [subTotal, setsubTotal] = useState(0);
-
-  useEffect(() => {
-    let total = 0;
-    data.forEach((element) => {
-      total = total + element.amount;
-    });
-    setsubTotal(total);
-  }, [data]);
-
   return (
-    <div className="h-screen w-full">
-      <div className="h-3/4 overflow-y-auto flex flex-col items-center">
+    <div>
+      <div className="h-[500px] overflow-auto scroll-smooth flex flex-col items-center">
         {data.map((item, index) => (
           <div
             key={index}
@@ -31,13 +21,13 @@ function CartItemList({ data, onDelItem }) {
                 className="border"
               />
               <div>
-                <h2 className="text-sm font-bold text-black">{item.title}</h2>
-                <h2 className="text-sm font-semibold text-gray-700">
+                <p className="text-sm font-bold text-black">{item.title}</p>
+                <p className="text-sm font-semibold text-gray-700">
                   Quantity:<span> {item.quantity}</span>
-                </h2>
-                <h2 className="text-sm font-bold  text-gray-900">
+                </p>
+                <p className="text-sm font-bold  text-gray-900">
                   ₹{item.actualPrice}
-                </h2>
+                </p>
               </div>
             </div>
             <Trash2Icon
@@ -46,12 +36,6 @@ function CartItemList({ data, onDelItem }) {
             />
           </div>
         ))}
-      </div>
-      <div className="h-[10%] w-[90%] absolute bottom-6 flex flex-col">
-        <h2 className="text-lg font-semibold text-gray-700 flex justify-between">
-          Subtotal: <span>₹{subTotal}</span>
-        </h2>
-        <Button>View Cart </Button>
       </div>
     </div>
   );

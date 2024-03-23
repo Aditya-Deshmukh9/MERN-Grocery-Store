@@ -12,9 +12,11 @@ import GlobalApi from "@/app/Utils/GlobalApi";
 import { LayoutGrid } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 function DropDownMenu() {
   const [cetegoryData, setCetegoryData] = useState([]);
+  const params = useParams();
 
   useEffect(() => {
     getCetegory();
@@ -33,7 +35,7 @@ function DropDownMenu() {
   return (
     <DropdownMenu className="outline-none">
       <DropdownMenuTrigger asChild>
-        <h1 className="md:flex hidden items-center gap-2 font-bold p-2 px-10 border bg-slate-200 rounded-full">
+        <h1 className="md:flex hidden items-center gap-2 font-normal p-2 px-10 border bg-slate-200 rounded-full">
           <LayoutGrid className="h-5 w-5" />
           Category
         </h1>
@@ -52,12 +54,18 @@ function DropDownMenu() {
               height={28}
               width={28}
             />
-            <Link
-              href={"products-category/" + category?.attributes?.name}
-              className="text-sm"
-            >
-              {category?.attributes?.name}
-            </Link>
+            {Object.keys(params).length === 0 ? (
+              <Link
+                href={"products-category/" + category?.attributes?.slug}
+                className="text-sm"
+              >
+                {category?.attributes?.name}
+              </Link>
+            ) : (
+              <Link href={category?.attributes?.slug} className="text-sm">
+                {category?.attributes?.name}
+              </Link>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
