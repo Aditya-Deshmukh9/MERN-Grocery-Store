@@ -30,6 +30,7 @@ function SigninPage() {
       localStorage.setItem("token", JSON.stringify(token));
       router.push("/");
       setupdatecart(true);
+      toast("account login successful");
       setisLoading(false);
     } catch (error) {
       toast(error.message);

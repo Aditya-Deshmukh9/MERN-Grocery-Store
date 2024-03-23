@@ -1,5 +1,6 @@
 "use client";
 import GlobalApi from "@/app/Utils/GlobalApi";
+import { useCart } from "@/app/_context/UpdateCartItems";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
@@ -15,20 +16,25 @@ function CreateAccountPage() {
   const [error, setError] = useState(null);
   const [isLoading, setisLoading] = useState(false);
   const router = useRouter();
+  const { setupdatecart } = useCart();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setisLoading(true);
     try {
       const response = await GlobalApi.registeruser(username, email, password);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      localStorage.setItem("jwt", JSON.stringify(response.data.jwt));
-
+      const token = {
+        user: response.data.user,
+        jwt: response.data.jwt,
+        isLogin: true,
+      };
+      localStorage.setItem("token", JSON.stringify(token));
       router.push("/");
+      setupdatecart(true);
       toast("account register successful");
       setisLoading(false);
     } catch (error) {
-      toast(error.response.data.message.error.message);
+      toast(error.message);
       console.log(error.response.data.error.message);
       setError(error.response.data.message);
       setisLoading(false);
