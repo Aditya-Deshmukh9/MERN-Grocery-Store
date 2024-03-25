@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
-function payment({ userData, totalPrice, cartItemList }) {
+function Payment({ userData, totalPrice, cartItemList }) {
   const route = useRouter();
 
   const placeOrder = () => {
@@ -89,7 +89,7 @@ function payment({ userData, totalPrice, cartItemList }) {
 
     GlobalApi.createOrder(payload, jwt).then((res) => {
       console.log(res);
-      route.push("/checkout/order-conformation");
+      route.push("/order-conformation");
       toast("Order Places Successfully");
     });
   };
@@ -113,4 +113,4 @@ function payment({ userData, totalPrice, cartItemList }) {
   );
 }
 
-export default payment;
+export default Payment;

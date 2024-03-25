@@ -7,7 +7,7 @@ import { MoveRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
-import Payment from "@/app/_components/payment/payment";
+import Payment from "@/app/_components/payment/Payment";
 
 function CheckoutPage() {
   const { updatecart } = useCart();
