@@ -19,6 +19,7 @@ import { useCart } from "@/app/_context/UpdateCartItems";
 import CartItemList from "./CartItemList";
 import { useRouter } from "next/navigation";
 import GlobalApi from "@/app/Utils/GlobalApi";
+import Profile from "./Profile";
 
 function Header() {
   const [login, setLogin] = useState();
@@ -93,26 +94,25 @@ function Header() {
 
   return (
     <div className="flex items-center justify-between p-5 shadow">
-      <div className="flex gap-8">
-        <Link href={"/"}>
-          <Image src="/logo.webp" alt="logo" width={150} height={150} />
+      <div className="flex gap-8 items-center">
+        <Link href="/">
+          <Image src="/logo.webp" alt="Logo" width={150} height={150} />
         </Link>
         <DropDownMenu />
-
-        <div className="md:flex hidden gap-3 items-center p-2 border-2 rounded-full">
+        <div className="md:flex hidden gap-3 items-center p-2 border border-black rounded-full">
           <Search className="ml-4" />
           <input
             type="text"
             placeholder="Search..."
-            className="outline-none font-normal"
+            className="outline-none md:w-64 font-normal"
           />
         </div>
       </div>
       <div className="flex items-center gap-4 font-bold">
         <Sheet>
           <SheetTrigger>
-            <h2 className="flex items-center gap-2">
-              <ShoppingBasket className="h-8 w-8 cursor-pointer" />
+            <h2 className="flex items-center gap-2 cursor-pointer">
+              <ShoppingBasket className="h-8 w-8" />
               <span className="bg-primary text-white px-2 font-normal text-xl rounded-full">
                 {totalItemInCart}
               </span>
@@ -120,10 +120,7 @@ function Header() {
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
-              <SheetTitle
-                className="bg-primary
-                text-white font-bold text-lg p-2"
-              >
+              <SheetTitle className="bg-primary text-white font-bold text-lg p-2">
                 My Cart ({totalItemInCart})
               </SheetTitle>
               <SheetDescription>
@@ -146,9 +143,11 @@ function Header() {
             </SheetClose>
           </SheetContent>
         </Sheet>
-
         {login === true ? (
-          <Button onClick={() => getSignOut()}>Logout</Button>
+          <>
+            {/* <Button onClick={() => getSignOut()}>Logout</Button> */}
+            <Profile getSignOut={getSignOut} />
+          </>
         ) : (
           <Link
             href="/signin"

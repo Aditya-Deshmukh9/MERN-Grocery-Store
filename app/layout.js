@@ -16,14 +16,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <MyContextProvider>
-          <Header />
-          {children}
-          <Toaster className="text-xl" />
-        </MyContextProvider>
-      </body>
-    </html>
+    <>
+      <html lang="en">
+        <body className={poppins.className}>
+          <MyContextProvider>
+            <Header />
+            {children}
+            <Toaster className="text-xl" />
+          </MyContextProvider>
+        </body>
+      </html>
+    </>
   );
 }

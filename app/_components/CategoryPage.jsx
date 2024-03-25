@@ -11,7 +11,7 @@ function CategoryPage({ categorylist }) {
           <Link
             href={"products-category/" + category?.attributes?.slug}
             key={category?.id}
-            className="bg-green-50 flex flex-col items-center mx-2 gap-3 p-2 py-4 group hover:bg-green-600 cursor-pointer rounded-md"
+            className="bg-green-50 flex flex-col items-center m-2 gap-3 p-2 py-4 group hover:bg-green-600 cursor-pointer rounded-md"
           >
             <Image
               src={category.attributes.icon.data[0].attributes.url}

@@ -45,27 +45,25 @@ function DropDownMenu() {
         <DropdownMenuSeparator />
         {cetegoryData.map((category) => (
           <DropdownMenuItem
-            className="flex gap-2 items-center cursor-pointer"
+            className="flex items-center cursor-pointer"
             key={category?.id}
           >
-            <Image
-              src={category.attributes.icon.data[0].attributes.url}
-              alt="icon"
-              height={28}
-              width={28}
-            />
-            {Object.keys(params).length === 0 ? (
-              <Link
-                href={"products-category/" + category?.attributes?.slug}
-                className="text-sm"
-              >
-                {category?.attributes?.name}
-              </Link>
-            ) : (
-              <Link href={category?.attributes?.slug} className="text-sm">
-                {category?.attributes?.name}
-              </Link>
-            )}
+            <Link
+              className="flex gap-2 items-center"
+              href={
+                Object.keys(params).length === 0
+                  ? `products-category/${category?.attributes?.slug}`
+                  : category?.attributes?.slug
+              }
+            >
+              <Image
+                src={category.attributes.icon.data[0].attributes.url}
+                alt="icon"
+                height={28}
+                width={28}
+              />
+              <p className="text-sm">{category?.attributes?.name}</p>
+            </Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
