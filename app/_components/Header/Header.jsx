@@ -20,6 +20,17 @@ import CartItemList from "./CartItemList";
 import { useRouter } from "next/navigation";
 import GlobalApi from "@/app/Utils/GlobalApi";
 import Profile from "./Profile";
+import SearchProducts from "./SearchProducts";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 function Header() {
   const [login, setLogin] = useState();
@@ -73,7 +84,7 @@ function Header() {
       const jwt = tokenpass.jwt;
       const itemId = id;
       try {
-        GlobalApi.deleteCartItems(itemId, jwt).then((res) => {
+        GlobalApi.deleteCartItems(itemId, jwt).then(() => {
           getCartItems(tokenpass);
           toast("Product Remove Successful");
         });
@@ -99,19 +110,27 @@ function Header() {
           <Image src="/logo.webp" alt="Logo" width={150} height={150} />
         </Link>
         <DropDownMenu />
-        <div className="md:flex hidden gap-3 items-center p-2 border border-black rounded-full">
-          <Search className="ml-4" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="outline-none md:w-64 font-normal"
-          />
-        </div>
+        {/* Search Box  */}
+        {/* <SearchProducts />  */}
       </div>
-      <div className="flex items-center gap-4 font-bold">
+      <div className="flex items-center md:gap-4 gap-3  font-bold">
+        <Drawer>
+          <DrawerTrigger>
+            <Search />
+          </DrawerTrigger>
+          <DrawerContent className="h-full">
+            <SearchProducts />
+            <DrawerFooter>
+              <DrawerClose>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+
         <Sheet>
           <SheetTrigger>
-            <h2 className="flex items-center gap-2 cursor-pointer">
+            <h2 className="flex items-center md:gap-2 gap-1 cursor-pointer">
               <ShoppingBasket className="h-8 w-8" />
               <span className="bg-primary text-white px-2 font-normal text-xl rounded-full">
                 {totalItemInCart}

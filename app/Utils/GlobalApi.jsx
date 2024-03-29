@@ -21,6 +21,13 @@ const getProductsList = () =>
     return res.data.data;
   });
 
+const getSearchProducts = (query) =>
+  axiosClient
+    .get("/products?populate=*&filters[title][$containsi]=" + query)
+    .then((res) => {
+      return res.data.data;
+    });
+
 const getProductsByCategory = (category) =>
   axiosClient
     .get("/products?filters[category][name][$eq]=" + category + "&populate=*")
@@ -138,4 +145,5 @@ export default {
   createOrder,
   getMyOrder,
   getProfile,
+  getSearchProducts,
 };
