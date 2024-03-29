@@ -1,4 +1,5 @@
 import GlobalApi from "@/app/Utils/GlobalApi";
+import { useCart } from "@/app/_context/UpdateCartItems";
 import { Button } from "@/components/ui/button";
 import { MoveRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -7,6 +8,7 @@ import { toast } from "sonner";
 
 function Payment({ userData, totalPrice, cartItemList }) {
   const route = useRouter();
+  const { setupdatecart, updatecart } = useCart();
 
   const placeOrder = () => {
     if (
@@ -59,7 +61,7 @@ function Payment({ userData, totalPrice, cartItemList }) {
           paymentId,
         };
         console.log(orderInfo);
-        createOrder(orderInfo, token.jwt);
+        createMyOrder(orderInfo, token.jwt);
       },
       theme: {
         color: "#3399cc",
@@ -70,7 +72,7 @@ function Payment({ userData, totalPrice, cartItemList }) {
     pay.open();
   };
 
-  const createOrder = (orderInfo, jwt) => {
+  const createMyOrder = (orderInfo, jwt) => {
     const payload = {
       data: {
         username: orderInfo.addressInfo.name,
@@ -87,10 +89,20 @@ function Payment({ userData, totalPrice, cartItemList }) {
       },
     };
 
+    console.log(payload, orderInfo, jwt);
+
     GlobalApi.createOrder(payload, jwt).then((res) => {
       console.log(res);
-      route.push("/order-conformation");
       toast("Order Places Successfully");
+
+      cartItemList.forEach((item) => {
+        GlobalApi.deleteCartItems(item.id, jwt).then((res) => {
+          console.log(res);
+          setupdatecart(!updatecart);
+        });
+      });
+
+      route.replace("/order-conformation");
     });
   };
 

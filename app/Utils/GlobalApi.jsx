@@ -91,6 +91,39 @@ const createOrder = (data, jwt) =>
     },
   });
 
+const getProfile = (jwt) =>
+  axiosClient.get("/users/me", {
+    headers: {
+      Authorization: "Bearer " + jwt,
+    },
+  });
+
+const getMyOrder = (userid, jwt) =>
+  axiosClient
+    .get(
+      "/orders?filters[userid][$eq]=" +
+        userid +
+        "&populate[orderitemlist][populate][product][populate][images]=url",
+      {
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+      }
+    )
+    .then((resp) => {
+      const responce = resp.data.data;
+      const orderList = responce.map((item) => ({
+        id: item.id,
+        totalOrderAmount: item.attributes.totalOrderAmount,
+        paymentId: item.attributes.paymentid,
+        orderItemList: item.attributes.orderitemlist,
+        createdAt: item.attributes.createdAt,
+        status: item.attributes.status,
+      }));
+
+      return orderList;
+    });
+
 export default {
   getCetegory,
   getSlider,
@@ -103,4 +136,6 @@ export default {
   getCartItem,
   deleteCartItems,
   createOrder,
+  getMyOrder,
+  getProfile,
 };

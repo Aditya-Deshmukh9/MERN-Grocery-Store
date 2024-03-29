@@ -16,7 +16,6 @@ function CheckoutPage() {
   const [totalItemInCart, setTotalItemInCart] = useState(0);
   const [subTotal, setsubTotal] = useState(0);
   const [totalPrice, settotalPrice] = useState();
-  const [usdtotalPrice, setusdtotalPrice] = useState();
   const route = useRouter();
   const [userData, setuserData] = useState({
     name: "",
@@ -32,9 +31,9 @@ function CheckoutPage() {
       const isLogin = token.isLogin;
       setLogin(isLogin);
       console.log("checkout", isLogin);
+      getCartItems(token);
+      setuserData({ name: token.user.username, email: token.user.email });
     }
-    getCartItems(token);
-    setuserData({ name: token.user.username, email: token.user.email });
   }, [updatecart]);
 
   useEffect(() => {
@@ -44,9 +43,7 @@ function CheckoutPage() {
     });
     setsubTotal(total);
     const totalinr = total + 28 + 40;
-    const totalusd = total + 28 + 40;
     settotalPrice(totalinr);
-    setusdtotalPrice((totalusd * 0.012).toFixed(2));
   }, [cartItemList]);
 
   const getCartItems = async (token) => {
@@ -101,7 +98,7 @@ function CheckoutPage() {
                 onChange={handleInputChange}
               />
               <Input
-                type="tel"
+                type="number"
                 name="phone"
                 placeholder="Phone no"
                 value={userData.phone}
@@ -149,10 +146,6 @@ function CheckoutPage() {
                 <tr className="font-bold border-2">
                   <td className="px-4 py-2">Total</td>
                   <td className="px-4 py-2 text-end">₹{totalPrice}</td>
-                </tr>
-                <tr className="font-bold border-2">
-                  <td className="px-4 py-2">Total(USD)</td>
-                  <td className="px-4 py-2 text-end">${usdtotalPrice}</td>
                 </tr>
                 <tr>
                   <td colSpan="2" className="px-4 py-2">
