@@ -12,7 +12,7 @@ async function page() {
   const productsList = await GlobalApi.getProductsList();
 
   return (
-    <div className="h-full w-full p-2 md:px-16 md:p-10 items-center ">
+    <div className="h-full w-full p-2 md:px-16 md:p-10 items-center antialiased">
       <Slider sliderlist={sliderlist} />
       <CategoryPage categorylist={categorylist} />
       <ProductPage productsList={productsList} />

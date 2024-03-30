@@ -25,10 +25,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
@@ -104,19 +101,18 @@ function Header() {
   };
 
   return (
-    <div className="flex items-center justify-between p-5 shadow">
+    <div className="flex items-center justify-between p-3  md:p-5 shadow">
       <div className="flex gap-8 items-center">
         <Link href="/">
           <Image src="/logo.webp" alt="Logo" width={150} height={150} />
         </Link>
         <DropDownMenu />
-        {/* Search Box  */}
-        {/* <SearchProducts />  */}
       </div>
-      <div className="flex items-center md:gap-4 gap-3  font-bold">
+      <div className="flex items-center md:gap-4 gap-2  font-bold">
+        {/* Search Box  */}
         <Drawer>
           <DrawerTrigger>
-            <Search />
+            <Search className="h-6 w-6 md:h-8 md:w-8" />
           </DrawerTrigger>
           <DrawerContent className="h-full">
             <SearchProducts />
@@ -131,8 +127,8 @@ function Header() {
         <Sheet>
           <SheetTrigger>
             <h2 className="flex items-center md:gap-2 gap-1 cursor-pointer">
-              <ShoppingBasket className="h-8 w-8" />
-              <span className="bg-primary text-white px-2 font-normal text-xl rounded-full">
+              <ShoppingBasket className="h-6 w-6 md:h-8 md:w-8" />
+              <span className="bg-primary text-white h-6 w-6 md:h-8 md:w-8 md:p-1 font-normal text-xl rounded-full">
                 {totalItemInCart}
               </span>
             </h2>

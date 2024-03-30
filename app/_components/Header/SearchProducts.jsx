@@ -32,9 +32,9 @@ function SearchProducts() {
           {" "}
           <form
             onSubmit={handleSubmit}
-            className="flex gap-3 p-2 items-center w-full border border-black rounded-full"
+            className="flex gap-y-3 p-1 md:p-2 items-center w-full border border-black rounded-full"
           >
-            <button type="submit" className="ml-4">
+            <button type="submit" className="ml-2 md:ml-4">
               <Search />
             </button>
             <input
@@ -42,21 +42,21 @@ function SearchProducts() {
               autoFocus
               autoComplete="true"
               placeholder="Search..."
-              className="outline-none border-black md:w-64 font-normal"
+              className="outline-none border-black w-full md:w-64 font-normal"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
           </form>
         </DrawerTitle>
         <DrawerDescription className="h-full w-full flex justify-center">
-          <div className="max-w-xs  md:max-w-4xl rounded-lg border bg-white p-4 shadow-md sm:p-8 dark:border-gray-700 dark:bg-gray-800">
-            <div className="flow-root">
-              <ul
-                role="list"
-                className="divide-y divide-gray-200 dark:divide-gray-700"
-              >
-                {searchData &&
-                  searchData.map((e, index) => (
+          {searchData && (
+            <div className="max-w-xs md:max-w-4xl rounded-lg border bg-white p-4 shadow-md md:p-8 dark:border-gray-700 dark:bg-gray-800">
+              <div className="flow-root">
+                <ul
+                  role="list"
+                  className="divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  {searchData.map((e, index) => (
                     <li key={index} className="py-3 sm:py-4">
                       <div className="flex items-center space-x-4">
                         <div className="flex-shrink-0">
@@ -65,14 +65,14 @@ function SearchProducts() {
                             alt="icon"
                             height={100}
                             width={100}
-                            className="h-20 w-20"
+                            className="h-10 w-10 md:h-20 md:w-20"
                           />
                         </div>
-                        <div className="min-w-0 flex-1">
+                        <div className="min-w-0 flex-1 text-left">
                           <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
                             {e.attributes.title}
                           </p>
-                          <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                          <p className="truncate text-xs font-normal text-gray-500 dark:text-gray-400">
                             {e.attributes.description}
                           </p>
                           <p className="text-xs font-normal">
@@ -88,9 +88,10 @@ function SearchProducts() {
                       </div>
                     </li>
                   ))}
-              </ul>
+                </ul>
+              </div>
             </div>
-          </div>
+          )}
         </DrawerDescription>
       </DrawerHeader>
     </>
