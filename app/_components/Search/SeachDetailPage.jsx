@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -9,8 +10,35 @@ import {
 import Image from "next/image";
 import AdjustQuantity from "../Products/AdjustQuantity";
 import AddToCart from "../Products/AddToCart";
+import GlobalApi from "@/app/Utils/GlobalApi";
+import NotFound from "../NotFound";
+import Loading from "../Loading";
 
-function SeachDetailPage({ data, quantity, setQuantity }) {
+function SeachDetailPage({ searchParams }) {
+  const [data, setData] = useState(null);
+  const [notFound, setnotFound] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (searchParams) {
+      apiCall();
+    }
+  }, []);
+
+  const apiCall = async () => {
+    try {
+      const search = searchParams.get("query");
+      await GlobalApi.getSearchDeatils(search).then((res) => setData(res));
+    } catch (error) {
+      setnotFound(true);
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  if (notFound) return <NotFound />;
+
+  if (data === null) return <Loading />;
+
   return (
     <div className="p-4 lg:p-4 flex flex-col md:flex-row w-full">
       <div className="hidden md:inline space-y-4">
