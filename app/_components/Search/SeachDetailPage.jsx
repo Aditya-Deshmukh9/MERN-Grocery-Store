@@ -1,0 +1,98 @@
+import React from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Image from "next/image";
+import AdjustQuantity from "../Products/AdjustQuantity";
+import AddToCart from "../Products/AddToCart";
+
+function SeachDetailPage({ data, quantity, setQuantity }) {
+  return (
+    <div className="p-4 lg:p-4 flex flex-col md:flex-row w-full">
+      <div className="hidden md:inline space-y-4">
+        {data &&
+          data.map((e, index) => (
+            <Image
+              key={index}
+              src={e.attributes.images.data[0].attributes.url}
+              alt={e.attributes.images.data[0].attributes.name + " " + index}
+              width={90}
+              height={90}
+              className="border rounded-sm"
+            />
+          ))}
+      </div>
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        className="w-4/5 mb-10 lg:mb-0 lg:w-full self-start flex items-center max-w-xl mx-auto lg:mx-20"
+      >
+        <CarouselContent>
+          {data &&
+            data.map((e, index) => (
+              <CarouselItem key={index}>
+                <div className="p-1">
+                  <div className="flex aspect-square items-center justify-center p-2 relative">
+                    <Image
+                      key={index}
+                      src={e.attributes.images.data[0].attributes.url}
+                      alt={
+                        e.attributes.images.data[0].attributes.name +
+                        " " +
+                        index
+                      }
+                      width={400}
+                      height={400}
+                    />
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+
+      <div className="flex-1 border w-full p-5 space-y-5">
+        <h1 className="text-3xl font-bold">
+          {data && data[0].attributes.title}
+        </h1>
+
+        <div className="space-x-2">
+          {data && data[0].attributes.description}
+        </div>
+        <hr />
+
+        <p className="text-2xl font-bold mt-2">
+          ₹{data[0].attributes.selling_price}
+          <span className="text-gray-400 text-sm font-normal line-through ml-1">
+            MRP ₹{data[0].attributes.mrp}
+          </span>
+        </p>
+        {/* <AddToCart product={product} /> */}
+        {data && (
+          <>
+            <AdjustQuantity quantity={quantity} setQuantity={setQuantity} />
+            {/* Add To cart */}
+            <AddToCart
+              quantity={quantity}
+              product={data[0]}
+              productTotalPrice={
+                data[0].attributes.selling_price
+                  ? data[0].attributes.selling_price
+                  : data[0].attributes.mrp
+              }
+            />
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default SeachDetailPage;
