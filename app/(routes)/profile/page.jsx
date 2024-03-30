@@ -32,7 +32,7 @@ function Profilepage() {
       </h2>
       {profileData && (
         <div className="mt-5 flex justify-center items-center">
-          <div className="flex flex-col items-center w-[30%] gap-y-5 p-4 py-10 px-6 border border-black shadow-lg ">
+          <div className="flex flex-col items-center md:w-[30%] gap-y-5 p-4 md:py-10 md:px-6 border border-black shadow-lg ">
             <CircleUserRound
               className="bg-green-100
             p-2 rounded-full cursor-pointer

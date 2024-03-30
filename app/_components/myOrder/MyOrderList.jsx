@@ -13,11 +13,13 @@ function MyOrderList({ orderdata }) {
             <Image
               src={e.product.data.attributes.images.data[0].attributes.url}
               alt="icon"
-              height={28}
-              width={28}
+              height={40}
+              width={40}
             />
           </TableCell>
-          <TableCell>{e.product.data.attributes.title}</TableCell>
+          <TableCell className="text-xs">
+            {e.product.data.attributes.title}
+          </TableCell>
           <TableCell>{e.quantity}</TableCell>
           <TableCell className="text-right">₹ {e.amount}</TableCell>
         </TableRow>

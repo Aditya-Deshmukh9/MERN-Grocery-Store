@@ -15,9 +15,9 @@ function Profile({ getSignOut }) {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <CircleUserRound
-          className="bg-green-100 p-1
+          className="bg-green-100 
             md:p-2 rounded-full cursor-pointer
-             text-primary h-10 w-10 md:h-12 md:w-12"
+             text-primary h-6 w-6 md:h-12 md:w-12"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent>

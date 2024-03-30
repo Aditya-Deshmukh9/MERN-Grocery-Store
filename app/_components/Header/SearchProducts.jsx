@@ -1,28 +1,36 @@
 "use client";
+import SeachDetailspage from "@/app/(routes)/search/page";
 import GlobalApi from "@/app/Utils/GlobalApi";
 import {
+  DrawerClose,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Search } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useRef, useState } from "react";
 
 function SearchProducts() {
   const [query, setQuery] = useState("");
   const [searchData, setsearchData] = useState(null);
-  console.log(searchData);
+  const drawerRef = useRef(null);
+  const route = useRouter();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (query) {
-      apiCall(query);
+      GlobalApi.getSearchProducts(query).then((res) => setsearchData(res));
     }
   };
 
-  const apiCall = () => {
-    GlobalApi.getSearchProducts(query).then((res) => setsearchData(res));
+  const handleLinkClick = (slug) => {
+    if (drawerRef.current) {
+      drawerRef.current.click();
+    }
+    route.push("/search?query=" + slug);
   };
 
   return (
@@ -34,15 +42,15 @@ function SearchProducts() {
             onSubmit={handleSubmit}
             className="flex gap-y-3 p-1 md:p-2 items-center w-full border border-black rounded-full"
           >
-            <button type="submit" className="ml-2 md:ml-4">
-              <Search />
+            <button type="submit" className="ml-2 m-2 md:ml-4">
+              <Search className=" hover:text-gray-400 " />
             </button>
             <input
               type="text"
               autoFocus
               autoComplete="true"
               placeholder="Search..."
-              className="outline-none border-black w-full md:w-64 font-normal"
+              className="outline-none border-black w-full font-normal"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -58,7 +66,10 @@ function SearchProducts() {
                 >
                   {searchData.map((e, index) => (
                     <li key={index} className="py-3 sm:py-4">
-                      <div className="flex items-center space-x-4">
+                      <div
+                        onClick={() => handleLinkClick(e.attributes.slug)}
+                        className="flex items-center cursor-pointer space-x-4"
+                      >
                         <div className="flex-shrink-0">
                           <Image
                             src={e.attributes.images.data[0].attributes.url}
@@ -90,6 +101,7 @@ function SearchProducts() {
                   ))}
                 </ul>
               </div>
+              <DrawerClose ref={drawerRef} />
             </div>
           )}
         </DrawerDescription>

@@ -160,7 +160,6 @@ function Header() {
         </Sheet>
         {login === true ? (
           <>
-            {/* <Button onClick={() => getSignOut()}>Logout</Button> */}
             <Profile getSignOut={getSignOut} />
           </>
         ) : (
