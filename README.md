@@ -14,17 +14,36 @@ This project is an online grocery store application built with Next.js, Tailwind
 
 ## Deploy
 
-Visit website: https://full-stack-grocery-store-aditya.vercel.app/
+Please Visit website: https://full-stack-grocery-store-aditya.vercel.app/
+
+Demo User-
+Email: demouser@gmail.com  
+Password: "demouser123@"
 
 Hosted on Vercel
 
 ## Screenshots
 
 _Home Page: This is the landing page of our application._
-![Home Page](./public/markuphero-TbeSFXOMzynvuHyLZ8JY.png)
+![Home Page](./public/home.png)
 
-_Category Page: This is the landing page of our application._
-![Home Page](./public/markuphero-rrbuGBpM45qLuEAjCiLV.jpg)
+_Category Page: This is the Category page of our application._
+![Home Page](./public/category.jpg)
+
+_MY ORDER PAGE: This is the MY order page of our application._
+![MY ORDERS Page](./public/myorder.png)
+
+_MY ORDER PAGE: This is the MY order page of our application._
+![MY ORDERS Page](./public/productdetails.jpg)
+
+_MY ORDER PAGE: This is the MY order page of our application._
+![MY ORDERS Page](./public/serach.jpg)
+
+_MY ORDER PAGE: This is the MY order page of our application._
+![MY ORDERS Page](./public/paymentgatway.jpg)
+
+_MY ORDER PAGE: This is the MY order page of our application._
+![MY ORDERS Page](./public/checkout.jpg)
 
 ## Tech Stack
 
