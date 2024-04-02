@@ -60,7 +60,7 @@ function Payment({ userData, totalPrice, cartItemList }) {
           userid: token.user.id,
           paymentId,
         };
-        console.log(orderInfo);
+        toast("Loading...");
         createMyOrder(orderInfo, token.jwt);
       },
       theme: {
@@ -89,15 +89,11 @@ function Payment({ userData, totalPrice, cartItemList }) {
       },
     };
 
-    console.log(payload, orderInfo, jwt);
-
     GlobalApi.createOrder(payload, jwt).then((res) => {
-      console.log(res);
       toast("Order Places Successfully");
 
       cartItemList.forEach((item) => {
         GlobalApi.deleteCartItems(item.id, jwt).then((res) => {
-          console.log(res);
           setupdatecart(!updatecart);
         });
       });

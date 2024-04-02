@@ -6,6 +6,9 @@ import AdjustQuantity from "./Products/AdjustQuantity";
 
 function ProductDetailsPage({ product }) {
   const [quantity, setQuantity] = useState(1);
+  const productTotalPrice = product.attributes.selling_price
+    ? product.attributes.selling_price
+    : product.attributes.mrp;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-2 gap-x-4 p-1 md:p-2">
@@ -40,11 +43,7 @@ function ProductDetailsPage({ product }) {
         <AddToCart
           quantity={quantity}
           product={product}
-          productTotalPrice={
-            product.attributes.selling_price
-              ? product.attributes.selling_price
-              : product.attributes.mrp
-          }
+          productTotalPrice={productTotalPrice}
         />
         <h2 className="font-semibold text-sm">
           Category: {product.attributes.category.data.attributes.name}

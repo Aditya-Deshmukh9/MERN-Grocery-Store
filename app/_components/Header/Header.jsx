@@ -1,5 +1,5 @@
 "use client";
-import { Search, ShoppingBasket } from "lucide-react";
+import { Loader, Search, ShoppingBasket } from "lucide-react";
 import {
   Sheet,
   SheetClose,
@@ -78,6 +78,7 @@ function Header() {
 
   const onDelItem = async (id) => {
     if (tokenpass) {
+      toast("Loading...");
       const jwt = tokenpass.jwt;
       const itemId = id;
       try {

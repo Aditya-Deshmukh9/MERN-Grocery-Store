@@ -4,7 +4,6 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 
 function MyOrderList({ orderdata }) {
-  console.log("orderdata", orderdata, orderdata.amount);
   return (
     <>
       {orderdata.map((e, index) => (

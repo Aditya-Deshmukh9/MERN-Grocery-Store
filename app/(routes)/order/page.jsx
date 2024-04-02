@@ -26,7 +26,6 @@ function orderPage() {
 
   const myOrders = async (userid, jwt) => {
     const getOrders = await GlobalApi.getMyOrder(userid, jwt);
-    console.log(getOrders);
     setdata(getOrders);
   };
 
