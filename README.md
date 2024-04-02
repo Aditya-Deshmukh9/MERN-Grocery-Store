@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is an online grocery store application built with Next.js, Tailwind CSS, and Shader UI. It utilizes Razorpay Payment Gateway for processing online payments and Axios for making HTTP requests.
+This project is an online grocery store application built with Next.js, Tailwind CSS, and Shadcn UI. It utilizes Razorpay Payment Gateway for processing online payments and Axios for making HTTP requests.
 
 ## Technologies Used
 
