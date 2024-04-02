@@ -3,7 +3,7 @@ import GlobalApi from "@/app/Utils/GlobalApi";
 import { useCart } from "@/app/_context/UpdateCartItems";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 function CreateAccountPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setisLoading] = useState(false);
@@ -34,11 +35,13 @@ function CreateAccountPage() {
       toast("account register successful");
       setisLoading(false);
     } catch (error) {
-      toast(error.message);
-      console.log(error.response.data.error.message);
-      setError(error.response.data.message);
+      setError(error.response.data.error.message);
       setisLoading(false);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -47,18 +50,15 @@ function CreateAccountPage() {
         <h1 className="text-center text-2xl font-bold text-gray-900 sm:text-3xl">
           Web<span className="text-primary">Food</span>Store.com
         </h1>
-
         <p className="mx-auto mt-1 max-w-md text-center text-gray-500">
           Enter your username, email, and password to sign up
         </p>
-
         <form
           className="mb-0 mt-6 space-y-6 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
           onSubmit={handleSubmit}
         >
           <p className="text-center text-lg font-medium">Sign up Now!</p>
-          {error && <p className="text-red-500">{error}</p>}{" "}
-          {/* Display error message if there is any */}
+          {error && <p className="text-red-500 text-sm px-2">{error}</p>}{" "}
           <div>
             <label htmlFor="username" className="sr-only">
               Username
@@ -89,20 +89,25 @@ function CreateAccountPage() {
               />
             </div>
           </div>
-          <div>
-            <label htmlFor="password" className="sr-only">
-              Password
-            </label>
-
-            <div className="relative">
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter password"
-              />
-            </div>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              placeholder="Enter password"
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute inset-y-0 right-0 flex items-center px-4 bg-transparent border-transparent focus:outline-none"
+            >
+              {showPassword ? (
+                <EyeOff size={18} color="grey" />
+              ) : (
+                <Eye size={18} color="grey" />
+              )}
+            </button>
           </div>
           <Button
             type="submit"

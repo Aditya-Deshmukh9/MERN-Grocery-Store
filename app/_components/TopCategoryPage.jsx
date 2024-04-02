@@ -8,7 +8,7 @@ function TopCategoryPage({ categorylist }) {
   const params = useParams();
 
   return (
-    <div className="mt-5 flex justify-center gap-2 md:gap-5 mx-7 md:mx-20 overflow-auto">
+    <div className="mt-5 flex justify-start md:justify-center gap-2 md:gap-5 mx-7 md:mx-20 overflow-x-auto">
       {categorylist.map((category) => (
         <Link
           href={category?.attributes?.slug}

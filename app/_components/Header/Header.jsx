@@ -1,5 +1,5 @@
 "use client";
-import { Loader, Search, ShoppingBasket } from "lucide-react";
+import { Search, ShoppingBasket } from "lucide-react";
 import {
   Sheet,
   SheetClose,
@@ -43,7 +43,6 @@ function Header() {
     if (token) {
       const isLogin = token.isLogin;
       setLogin(isLogin);
-      console.log("isLogin", isLogin);
     }
     getCartItems(token);
     settokenpass(token);

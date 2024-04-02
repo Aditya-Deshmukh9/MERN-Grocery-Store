@@ -3,7 +3,7 @@ import GlobalApi from "@/app/Utils/GlobalApi";
 import { useCart } from "@/app/_context/UpdateCartItems";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -12,7 +12,9 @@ import { toast } from "sonner";
 function SigninPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setisLoading] = useState(false);
+  const [error, seterror] = useState(false);
   const { setupdatecart } = useCart();
   const router = useRouter();
 
@@ -33,10 +35,18 @@ function SigninPage() {
       toast("account login successful");
       setisLoading(false);
     } catch (error) {
-      toast(error.message);
-      console.log("An error occurred:", error);
+      seterror(true);
       setisLoading(false);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const demoUser = () => {
+    setEmail("demouser@gmail.com");
+    setPassword("demouser123@");
   };
 
   return (
@@ -57,6 +67,11 @@ function SigninPage() {
           <p className="text-center text-lg font-medium">
             Sign in to your account
           </p>
+          {error && (
+            <p className="text-start text-red-400 text-sm font-medium">
+              Please check email and password
+            </p>
+          )}
           <div>
             <label htmlFor="email" className="sr-only">
               Email
@@ -79,13 +94,24 @@ function SigninPage() {
             </label>
 
             <div className="relative">
-              <Input
-                type="password"
+              <input
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
               />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center px-4 bg-transparent border-transparent focus:outline-none"
+              >
+                {showPassword ? (
+                  <EyeOff size={18} color="grey" />
+                ) : (
+                  <Eye size={18} color="grey" />
+                )}
+              </button>
             </div>
           </div>
 
