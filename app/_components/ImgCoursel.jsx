@@ -7,13 +7,13 @@ import {
 import Image from "next/image";
 
 function ImgCoursel({ img }) {
-  const sortedImages = img.sort((a, b) => b.id - a.id);
+  // const sortedImages = img.sort((a, b) => b.id - a.id);
 
   return (
     <Carousel>
       <CarouselContent>
-        {sortedImages.map((image) => (
-          <CarouselItem key={image.id}>
+        {img.map((image) => (
+          <CarouselItem key={image.id} className="flex justify-center">
             <Image
               src={image.attributes.url}
               height={300}

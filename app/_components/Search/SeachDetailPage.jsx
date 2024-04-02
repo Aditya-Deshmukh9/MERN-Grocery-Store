@@ -13,6 +13,7 @@ import AddToCart from "../Products/AddToCart";
 import GlobalApi from "@/app/Utils/GlobalApi";
 import NotFound from "../NotFound";
 import Loading from "../Loading";
+import ImgCoursel from "../ImgCoursel";
 
 function SeachDetailPage({ searchParams }) {
   const [data, setData] = useState(null);
@@ -43,48 +44,21 @@ function SeachDetailPage({ searchParams }) {
     <div className="p-4 lg:p-4 flex flex-col md:flex-row w-full">
       <div className="hidden md:inline space-y-4">
         {data &&
-          data.map((e, index) => (
+          data[0].attributes.images.data.map((e) => (
             <Image
-              key={index}
-              src={e.attributes.images.data[0].attributes.url}
-              alt={e.attributes.images.data[0].attributes.name + " " + index}
+              key={e.id}
+              src={e.attributes.url}
+              alt={e.attributes.name + " " + e.id}
               width={90}
               height={90}
               className="border rounded-sm"
             />
           ))}
       </div>
-      <Carousel
-        opts={{
-          loop: true,
-        }}
-        className="w-4/5 mb-10 lg:mb-0 lg:w-full self-start flex items-center max-w-xl mx-auto lg:mx-20"
-      >
-        <CarouselContent>
-          {data &&
-            data.map((e, index) => (
-              <CarouselItem key={index}>
-                <div className="p-1">
-                  <div className="flex aspect-square items-center justify-center p-2 relative">
-                    <Image
-                      key={index}
-                      src={e.attributes.images.data[0].attributes.url}
-                      alt={
-                        e.attributes.images.data[0].attributes.name +
-                        " " +
-                        index
-                      }
-                      width={400}
-                      height={400}
-                    />
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+      {/* Center Coursel */}
+      <div className="flex items-center justify-center">
+        <ImgCoursel className="" img={data && data[0].attributes.images.data} />
+      </div>
 
       <div className="flex-1 border w-full p-5 space-y-5">
         <h1 className="text-3xl font-bold">
@@ -93,7 +67,14 @@ function SeachDetailPage({ searchParams }) {
 
         <div className="space-x-2">
           {data && data[0].attributes.description}
+          <p className="font-semibold text-sm">
+            Category: {data && data[0].attributes.category.data.attributes.name}
+          </p>
         </div>
+
+        <h3 className="font-semibold text-lg text-black">
+          Quantity: {data && data[0].attributes.ItemQntyType}
+        </h3>
         <hr />
 
         <p className="text-2xl font-bold mt-2">
@@ -102,10 +83,19 @@ function SeachDetailPage({ searchParams }) {
             MRP ₹{data[0].attributes.mrp}
           </span>
         </p>
-        {/* <AddToCart product={product} /> */}
+
         {data && (
           <>
-            <AdjustQuantity quantity={quantity} setQuantity={setQuantity} />
+            <AdjustQuantity
+              quantity={quantity}
+              setQuantity={setQuantity}
+              productTotalPrice={
+                data[0].attributes.selling_price
+                  ? data[0].attributes.selling_price
+                  : data[0].attributes.mrp
+              }
+            />
+
             {/* Add To cart */}
             <AddToCart
               quantity={quantity}

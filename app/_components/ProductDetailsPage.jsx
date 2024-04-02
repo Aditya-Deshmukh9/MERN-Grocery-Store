@@ -33,10 +33,11 @@ function ProductDetailsPage({ product }) {
         </h3>
         {/* Quantity of Products */}
         <div className="flex items-center">
-          <AdjustQuantity quantity={quantity} setQuantity={setQuantity} />
-          <h2 className="text-xl font-semibold">
-            =₹{productTotalPrice * quantity}
-          </h2>
+          <AdjustQuantity
+            quantity={quantity}
+            setQuantity={setQuantity}
+            productTotalPrice={productTotalPrice}
+          />
         </div>
 
         {/* Add To cart */}

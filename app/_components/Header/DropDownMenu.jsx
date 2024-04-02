@@ -35,7 +35,7 @@ function DropDownMenu() {
   return (
     <DropdownMenu className="outline-none">
       <DropdownMenuTrigger asChild>
-        <h1 className="md:flex hidden items-center gap-2 font-normal p-2 px-10 border bg-slate-200 rounded-full">
+        <h1 className="md:flex hidden items-center gap-2 font-normal p-2 px-10 border text-white   bg-primary rounded-full">
           <LayoutGrid className="h-5 w-5" />
           Category
         </h1>
