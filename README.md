@@ -1,4 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ![Grocery Store](https://full-stack-grocery-store-aditya.vercel.app/_next/image?url=%2Flogo.webp&w=256&q=75) Grocery Store
+
+## Description
+
+This project is an online grocery store application built with Next.js, Tailwind CSS, and Shader UI. It utilizes Razorpay Payment Gateway for processing online payments and Axios for making HTTP requests.
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org/): ⚛️ A React framework for building server-rendered applications.
+- [Tailwind CSS](https://tailwindcss.com/): 🎨 A utility-first CSS framework for building custom designs quickly.
+- [Shader UI](https://shadcn.com/): 💡 A UI library providing components and utilities for React applications.
+- [Razorpay Payment Gateway](https://razorpay.com/): 💳 A payment gateway service for processing online payments.
+- [Axios](https://axios-http.com/): 📡 A promise-based HTTP client for making HTTP requests from Node.js or the browser.
+
+## Deploy
+
+Visit website: https://full-stack-grocery-store-aditya.vercel.app/
+
+Hosted on Vercel
+
+## Screenshots
+
+_Home Page: This is the landing page of our application._
+![Home Page](./public/markuphero-TbeSFXOMzynvuHyLZ8JY.png)
+
+_Category Page: This is the landing page of our application._
+![Home Page](./public/markuphero-rrbuGBpM45qLuEAjCiLV.jpg)
+
+## Tech Stack
+
+**Client:** Next.js, TailwindCSS, Shadcn UI, Deploy on Vercel
+
+**Server:** Strapi, delopy on Render
+
+**Database** PostgreSQL
 
 ## Getting Started
 
