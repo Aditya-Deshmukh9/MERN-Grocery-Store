@@ -1,12 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import Image from "next/image";
 import AdjustQuantity from "../Products/AdjustQuantity";
 import AddToCart from "../Products/AddToCart";
@@ -25,7 +18,7 @@ function SeachDetailPage({ searchParams }) {
     if (searchParams) {
       apiCall();
     }
-  }, []);
+  }, [searchParams]);
 
   const apiCall = async () => {
     try {
@@ -48,7 +41,7 @@ function SeachDetailPage({ searchParams }) {
         slug={data && data[0].attributes.slug}
       />
 
-      <div className="p-4 lg:p-4 flex flex-col md:flex-row w-full">
+      <div className="p-4 lg:p-4 flex flex-col justify-between md:flex-row w-full">
         <div className="hidden md:inline space-y-4">
           {data &&
             data[0].attributes.images.data.map((e) => (
@@ -67,7 +60,7 @@ function SeachDetailPage({ searchParams }) {
           <ImgCoursel img={data && data[0].attributes.images.data} />
         </div>
 
-        <div className="flex flex-col border w-full p-5 space-y-5">
+        <div className="flex flex-col border md:w-1/2 p-5 space-y-5">
           <h1 className="text-3xl font-bold">
             {data && data[0].attributes.title}
           </h1>

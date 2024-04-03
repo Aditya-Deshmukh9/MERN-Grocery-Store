@@ -7,7 +7,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { Search } from "lucide-react";
+import { Loader, Search } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
@@ -15,6 +15,7 @@ import React, { useRef, useState } from "react";
 function SearchProducts() {
   const [query, setQuery] = useState("");
   const [searchData, setsearchData] = useState(null);
+  const [loading, setloading] = useState(false);
   const drawerRef = useRef(null);
   const route = useRouter();
 
@@ -22,7 +23,13 @@ function SearchProducts() {
     event.preventDefault();
 
     if (query) {
-      GlobalApi.getSearchProducts(query).then((res) => setsearchData(res));
+      setloading(true);
+    }
+    if (query) {
+      GlobalApi.getSearchProducts(query).then((res) => {
+        setsearchData(res);
+        setloading(false);
+      });
     }
   };
 
@@ -64,41 +71,47 @@ function SearchProducts() {
                   role="list"
                   className="divide-y divide-gray-200 dark:divide-gray-700"
                 >
-                  {searchData.map((e, index) => (
-                    <li key={index} className="py-3 sm:py-4">
-                      <div
-                        onClick={() => handleLinkClick(e.attributes.slug)}
-                        className="flex items-center cursor-pointer space-x-4"
-                      >
-                        <div className="flex-shrink-0">
-                          <Image
-                            src={e.attributes.images.data[0].attributes.url}
-                            alt="icon"
-                            height={100}
-                            width={100}
-                            className="h-10 w-10 md:h-20 md:w-20"
-                          />
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <Loader className="animate-spin" />
+                    </div>
+                  ) : (
+                    searchData.map((e, index) => (
+                      <li key={index} className="py-3 sm:py-4">
+                        <div
+                          onClick={() => handleLinkClick(e.attributes.slug)}
+                          className="flex items-center cursor-pointer space-x-4"
+                        >
+                          <div className="flex-shrink-0">
+                            <Image
+                              src={e.attributes.images.data[0].attributes.url}
+                              alt="icon"
+                              height={100}
+                              width={100}
+                              className="h-10 w-10 md:h-20 md:w-20"
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1 text-left">
+                            <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                              {e.attributes.title}
+                            </p>
+                            <p className="truncate text-xs font-normal text-gray-500 dark:text-gray-400">
+                              {e.attributes.description}
+                            </p>
+                            <p className="text-xs font-normal">
+                              Category:{" "}
+                              <span className="font-semibold">
+                                {e.attributes.category.data.attributes.name}
+                              </span>
+                            </p>
+                          </div>
+                          <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                            ₹ {e.attributes.selling_price}
+                          </div>
                         </div>
-                        <div className="min-w-0 flex-1 text-left">
-                          <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                            {e.attributes.title}
-                          </p>
-                          <p className="truncate text-xs font-normal text-gray-500 dark:text-gray-400">
-                            {e.attributes.description}
-                          </p>
-                          <p className="text-xs font-normal">
-                            Category:{" "}
-                            <span className="font-semibold">
-                              {e.attributes.category.data.attributes.name}
-                            </span>
-                          </p>
-                        </div>
-                        <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                          ₹ {e.attributes.selling_price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
+                      </li>
+                    ))
+                  )}
                 </ul>
               </div>
               <DrawerClose ref={drawerRef} />

@@ -26,7 +26,7 @@ function TopCategoryPage({ categorylist }) {
             width={50}
             className="group-hover:scale-125 transition-all ease-in-out"
           />
-          <h2 className="text-sm">{category?.attributes?.name}</h2>
+          <h2 className="text-sm capitalize">{category?.attributes?.name}</h2>
         </Link>
       ))}
     </div>

@@ -62,7 +62,7 @@ function DropDownMenu() {
                 height={28}
                 width={28}
               />
-              <p className="text-sm">{category?.attributes?.name}</p>
+              <p className="text-sm capitalize">{category?.attributes?.name}</p>
             </Link>
           </DropdownMenuItem>
         ))}

@@ -37,7 +37,7 @@ const getSearchDeatils = (query) =>
 
 const getProductsByCategory = (category) =>
   axiosClient
-    .get("/products?filters[category][name][$eq]=" + category + "&populate=*")
+    .get("/products?filters[category][slug][$eq]=" + category + "&populate=*")
     .then((res) => {
       return res.data.data;
     });
