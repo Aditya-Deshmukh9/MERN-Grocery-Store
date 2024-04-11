@@ -8,7 +8,7 @@ This project is an online grocery store application built with Next.js, Tailwind
 
 - [Next.js](https://nextjs.org/): ⚛️ A React framework for building server-rendered applications.
 - [Tailwind CSS](https://tailwindcss.com/): 🎨 A utility-first CSS framework for building custom designs quickly.
-- [Shader UI](https://shadcn.com/): 💡 A UI library providing components and utilities for React applications.
+- [Shadcn UI](https://shadcn.com/): 💡 A UI library providing components and utilities for React applications.
 - [Razorpay Payment Gateway](https://razorpay.com/): 💳 A payment gateway service for processing online payments.
 - [Axios](https://axios-http.com/): 📡 A promise-based HTTP client for making HTTP requests from Node.js or the browser.
 
